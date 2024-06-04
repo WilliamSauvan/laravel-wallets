@@ -9,8 +9,7 @@
         "guzzlehttp/guzzle": "^7.8",
         "google/auth": "^1.40",
         "google/apiclient-services": "^0.358.0",
-        "google/apiclient": "^2.16",
-        "laravel/pint": "^1.16"
+        "google/apiclient": "^2.16"
     },
     "autoload": {
         "psr-4": {
@@ -26,5 +25,8 @@
                 "GoogleWallet": "Webqamdev\\LaravelWallets\\Facades\\GoogleWallet"
             }
         }
+    },
+    "require-dev": {
+        "laravel/pint": "^1.16"
     }
 }
