@@ -38,3 +38,16 @@ $link = GoogleWallet::getWalletObjectButtonLink($walletGenericObject->id, $walle
 
 return redirect()->to($link);
 ```
+
+### Apple Wallet
+
+```bash
+AppleWallet::initNewObjectData()
+            ->setObjectPassType('generic')
+            ->setObjectBarCode("Valeur du QR_Code pour l'objet test")
+            ->addToHeaderFields('headerField', 'Header Field', 'Header Field Value')
+            ->addToPrimaryFields('primaryField', 'Primary Field', 'Primary Field Value')
+            ->addToSecondaryFields('secondaryField1', 'Secondary Field 1', 'Secondary Field Value 1')
+            ->addToSecondaryFields('secondaryField2', 'Secondary Field 2', 'Secondary Field Value 2')
+            ->downloadPass();
+```

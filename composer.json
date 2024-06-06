@@ -9,7 +9,8 @@
         "guzzlehttp/guzzle": "^7.8",
         "google/auth": "^1.40",
         "google/apiclient-services": "^0.358.0",
-        "google/apiclient": "^2.16"
+        "google/apiclient": "^2.16",
+        "laravel/framework": "^10.38"
     },
     "autoload": {
         "psr-4": {
