@@ -17,9 +17,7 @@ class ServiceProvider extends BaseServiceProvider
         });
 
         $this->app->singleton('appleWallet', function ($app) {
-            $config = $app->make('config')->get('wallets');
-
-            return new Services\GoogleWalletService($config);
+            return new Services\AppleWalletService();
         });
     }
 
