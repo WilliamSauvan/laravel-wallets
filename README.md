@@ -36,10 +36,7 @@ php artisan vendor:publish --provider="Webqamdev\LaravelWallets\ServiceProvider"
 ### Google Wallet
 
 ```bash
-// Mean "{$issuerId}.{$objectSuffix}"
 $objectSuffix = auth()->user()->id.'_'.$eventTimeslot->id;
-
-// Mean "{$issuerId}.{$classSuffix}"
 $classSuffix = 'event';
         
 $walletGenericObject = GoogleWallet::initNewObjectData($objectSuffix, $classSuffix)
