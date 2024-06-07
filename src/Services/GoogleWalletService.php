@@ -12,6 +12,7 @@ use Google\Service\Walletobjects\LocalizedString;
 use Google\Service\Walletobjects\TranslatedString;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
+use JsonException;
 
 /**
  * Full PHP implementation of Google Wallet API : https://github.com/google-wallet/rest-samples/blob/main/php/README.md
@@ -56,11 +57,14 @@ class GoogleWalletService
 
     protected array $config;
 
+    /**
+     * @throws JsonException
+     */
     public function __construct(array $config)
     {
         $this->config = $config;
         $this->keyFilePath = $this->config['google_wallet']['auth_file_path'];
-        $this->serviceAccount = json_decode(file_get_contents($this->keyFilePath), true);
+        $this->serviceAccount = json_decode(file_get_contents($this->keyFilePath), true, 512, JSON_THROW_ON_ERROR);
 
         $this->issuerId = $this->config['google_wallet']['issuer_id'];
 
