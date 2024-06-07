@@ -21,6 +21,8 @@ class AppleWalletService
 
     public const PASS_FIELDSET_BACK = 'backFields';
 
+    public const APPLE_IMAGES_FOLDER = 'images/wallets/apple-assets/pass/';
+
     private const IMAGE_LIST = [
         'background.png',
         'background@2x.png',
@@ -64,72 +66,26 @@ class AppleWalletService
         );
     }
 
-    public function initNewObjectData(): self
+    public function initNewObjectData(array $config = []): self
     {
-        $this->newWalletObject = [
+        $defaultConfig = [
             'passTypeIdentifier' => $this->config['apple_wallet']['pass_identifier'],
             'teamIdentifier' => $this->config['apple_wallet']['team_identifier'],
-            'logoText' => 'YSL',
+            'logoText' => '',
             'description' => config('app.name'),
             'formatVersion' => 1,
-            'organizationName' => 'Yves Saint Laurent',
+            'organizationName' => '',
             'serialNumber' => '12345678',
             'foregroundColor' => 'rgb(0, 0, 0)',
             'backgroundColor' => 'rgb(255, 255, 255)',
             'relevantDate' => date('Y-m-d\TH:i:sP'),
-            /*'generic' => [
-                'headerFields' => [
-                    [
-                        'key' => 'staffNumber',
-                        'label' => 'Staff Number',
-                        'value' => '001'
-                    ]
-                ],
-                'primaryFields' => [
-                    [
-                        'key' => 'staffName',
-                        'label' => 'Name',
-                        'value' => 'Peter Brooke'
-                    ]
-                ],
-                'secondaryFields' => [
-                    [
-                        'key' => 'telephoneExt',
-                        'label' => 'Extension',
-                        'value' => '9779'
-                    ],
-                    [
-                        'key' => 'jobTitle',
-                        'label' => 'Job Title',
-                        'value' => 'Chief Pass Creator'
-                    ]
-                ],
-                'auxiliaryFields' => [
-                    [
-                        'key' => 'expiryDate',
-                        'dateStyle' => 'PKDateStyleShort',
-                        'label' => 'Expiry Date',
-                        'value' => '2013-12-31T00:00-23:59'
-                    ]
-                ],
-                'backFields' => [
-                    [
-                        'key' => 'managersName',
-                        'label' => 'Manager Name',
-                        'value' => 'Paul Bailey'
-                    ],
-                    [
-                        'key' => 'managersExt',
-                        'label' => 'Manager Extension',
-                        'value' => '9673'
-                    ],
-                ],
-            ],*/
         ];
+
+        $this->newWalletObject = array_merge($defaultConfig, $config);
 
         try {
             foreach (self::IMAGE_LIST as $image) {
-                $this->pkPass->addFile(resource_path('images/wallet/apple-assets/pass/'.$image));
+                $this->pkPass->addFile(public_path(self::APPLE_IMAGES_FOLDER.$image));
             }
         } catch (\PKPass\PKPassException $e) {
             Log::error($e->getMessage());

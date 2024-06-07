@@ -10,6 +10,7 @@ use Google\Service\Walletobjects\Barcode;
 use Google\Service\Walletobjects\GenericObject;
 use Google\Service\Walletobjects\LocalizedString;
 use Google\Service\Walletobjects\TranslatedString;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -71,7 +72,7 @@ class GoogleWalletService
         try {
             return $this->service->genericobject->get("{$this->issuerId}.{$objectSuffix}");
         } catch (\Google\Service\Exception $e) {
-            if ($e->getCode() !== 404) {
+            if ($e->getCode() !== Response::HTTP_NOT_FOUND) {
                 Log::error($e->getMessage());
             }
         }
@@ -129,7 +130,7 @@ class GoogleWalletService
         return $this;
     }
 
-    public function setObjectLocalizedString(string $key, string $value, string $language = 'fr-FR'): self
+    public function setObjectLocalizedString(string $key, string $value, string $language = 'en-EN'): self
     {
         return $this->setObjectDataKey(
             $key,
@@ -142,12 +143,12 @@ class GoogleWalletService
         );
     }
 
-    public function setObjectCardTitle(string $value, string $language = 'fr-FR'): self
+    public function setObjectCardTitle(string $value, string $language = 'en-EN'): self
     {
         return $this->setObjectLocalizedString('cardTitle', $value, $language);
     }
 
-    public function setObjectHeader(string $value, string $language = 'fr-FR'): self
+    public function setObjectHeader(string $value, string $language = 'en-EN'): self
     {
         return $this->setObjectLocalizedString('header', $value, $language);
     }
