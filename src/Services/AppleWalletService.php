@@ -48,24 +48,27 @@ class AppleWalletService
 
     protected ?string $newWalletPassType = 'generic';
 
-    public function __construct()
+    protected array $config;
+
+    public function __construct(array $config)
     {
+        $this->config = $config;
         $this->initNewPkPass();
     }
 
     public function initNewPkPass(): void
     {
         $this->pkPass = new PKPass(
-            config('wallet.apple_wallet.certificates_file_path'),
-            config('wallet.apple_wallet.certificates_password')
+            $this->config['apple_wallet']['certificates_file_path'],
+            $this->config['apple_wallet']['certificates_password']
         );
     }
 
     public function initNewObjectData(): self
     {
         $this->newWalletObject = [
-            'passTypeIdentifier' => config('wallet.apple_wallet.pass_identifier'),
-            'teamIdentifier' => config('wallet.apple_wallet.team_identifier'),
+            'passTypeIdentifier' => $this->config['apple_wallet']['pass_identifier'],
+            'teamIdentifier' => $this->config['apple_wallet']['team_identifier'],
             'logoText' => 'YSL',
             'description' => config('app.name'),
             'formatVersion' => 1,
