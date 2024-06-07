@@ -28,5 +28,13 @@ class ServiceProvider extends BaseServiceProvider
         $this->publishes([
             __DIR__.'/../config/wallets.php' => config_path('wallets.php'),
         ], 'config');
+
+        $this->publishes([
+            __DIR__.'/resources/images/wallets' => public_path('vendor/webqamdev/laravel-wallets'),
+        ], 'public');
+
+        $this->publishes([
+            __DIR__.'/resources/lang/en' => resource_path('lang/en'),
+        ], 'lang');
     }
 }
