@@ -17,6 +17,20 @@ The **Laravel Wallets Service Package** is a comprehensive library for managing 
 composer require webqamdev/laravel-wallets
 ```
 
+### Publish files
+
+#### Publish images file
+
+```bash
+php artisan vendor:publish --provider="Webqamdev\LaravelWallets\ServiceProvider" --tag="images"
+```
+
+#### Publish lang file
+
+```bash
+php artisan vendor:publish --provider="Webqamdev\LaravelWallets\ServiceProvider" --tag="lang"
+```
+
 ## Usage
 
 ### Google Wallet
