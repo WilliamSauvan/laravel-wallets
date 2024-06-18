@@ -25,6 +25,8 @@ composer require webqamdev/laravel-wallets
 php artisan vendor:publish --provider="Webqamdev\LaravelWallets\ServiceProvider" --tag="images"
 ```
 
+This allows you to override them in your project.
+
 #### Publish lang file
 
 ```bash
@@ -35,16 +37,23 @@ php artisan vendor:publish --provider="Webqamdev\LaravelWallets\ServiceProvider"
 
 ### Google Wallet
 
+Follow step 1 to 4 in the tutorial to create a Google Wallet Object: https://developers.google.com/wallet/generic/web/prerequisites?hl=fr
+The step 5 is handled by this plugin for generic passes
+
+Generate the wallet
 ```bash
-$objectSuffix = auth()->user()->id.'_'.$eventTimeslot->id;
-$classSuffix = 'event';
+$objectSuffix = 'my_custom_prefix'; // can be anything you want, this will be used to cache the pass
+$classSuffix = 'event'; // should be whatever you defined in your google pay console
         
 $walletGenericObject = GoogleWallet::initNewObjectData($objectSuffix, $classSuffix)
-            ->setObjectCardTitle('Test de cardTitle')
-            ->setObjectHeader('Test de header')
-            ->setObjectBarCode("Valeur du QR_Code pour l'objet {$objectSuffix}")
+            ->setObjectCardTitle('Card title', 'fr_FR')
+            ->setObjectHeader('Header title', 'fr_FR')
+            ->setObjectBarCode('QR code value')
             ->findOrCreateObject();
-            
+```
+
+Redirect the user to the corresponding Google link
+```bash     
 $link = GoogleWallet::getWalletObjectButtonLink($walletGenericObject->id, $walletGenericObject->classId);
 
 return redirect()->to($link);
@@ -52,10 +61,11 @@ return redirect()->to($link);
 
 ### Apple Wallet
 
+For apple, the pass is directly downloaded
 ```bash
 AppleWallet::initNewObjectData()
             ->setObjectPassType('generic')
-            ->setObjectBarCode("Valeur du QR_Code pour l'objet test")
+            ->setObjectBarCode('QR code value')
             ->addToHeaderFields('headerField', 'Header Field', 'Header Field Value')
             ->addToPrimaryFields('primaryField', 'Primary Field', 'Primary Field Value')
             ->addToSecondaryFields('secondaryField1', 'Secondary Field 1', 'Secondary Field Value 1')
