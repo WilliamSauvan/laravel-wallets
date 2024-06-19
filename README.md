@@ -52,6 +52,12 @@ $walletGenericObject = GoogleWallet::initNewObjectData($objectSuffix, $classSuff
             ->findOrCreateObject();
 ```
 
+You need to fill these env variables:
+```bash
+GOOGLE_WALLET_APPLICATION_CREDENTIALS=/absolute/path/auth-file.json // generated in google cloud console while adding a key on service account
+GOOGLE_WALLET_ISSUER_ID=123456789 // id from google pay console
+```
+
 Redirect the user to the corresponding Google link
 ```bash     
 $link = GoogleWallet::getWalletObjectButtonLink($walletGenericObject->id, $walletGenericObject->classId);
@@ -60,6 +66,17 @@ return redirect()->to($link);
 ```
 
 ### Apple Wallet
+
+You need to generate 2 files to use the Apple Wallet service: a pass.cer and a certificate.
+You can follow this tutorial to generate them: https://developer.apple.com/documentation/walletpasses/building_a_pass
+
+You need to fill these env variables:
+```bash
+APPLE_WALLET_CERTIFICATES_FILE_PATH=path/to/my/Certificates.p12 // defined when exporting the certificate
+APPLE_WALLET_CERTIFICATES_PASSWORD=mypassword // set while creating certificate
+APPLE_WALLET_PASS_IDENTIFIER=my.pass.id // set while creating certificate
+APPLE_WALLET_TEAM_IDENTIFIER=TEAMID // can be found in billing details in apple developer account
+```
 
 For apple, the pass is directly downloaded
 ```bash
