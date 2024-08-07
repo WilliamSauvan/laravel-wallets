@@ -10,6 +10,8 @@ use Google\Service\Walletobjects\Barcode;
 use Google\Service\Walletobjects\GenericObject;
 use Google\Service\Walletobjects\LocalizedString;
 use Google\Service\Walletobjects\TranslatedString;
+use Google\Service\Walletobjects\Image;
+use Google\Service\Walletobjects\ImageUri;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
 use JsonException;
@@ -113,12 +115,28 @@ class GoogleWalletService
     public function initNewObjectData(
         string $objectSuffix,
         string $classSuffix,
-        string $state = 'ACTIVE'
+        string $state = 'ACTIVE',
+        string $logoUrl = '',
+        array $additionalParams = []
     ): self {
+
+        if ($logoUrl) {
+            $logo = [
+                'logo' => new Image([
+                    'sourceUri' => new ImageUri([
+                        'uri' => $logoUrl
+                    ])
+                ])
+            ];
+
+            $additionalParams = array_merge($logo, $additionalParams);
+        }
+
         $this->newWalletObject = [
             'id' => "{$this->issuerId}.{$objectSuffix}",
             'classId' => "{$this->issuerId}.{$classSuffix}",
             'state' => $state,
+            ...$additionalParams
         ];
 
         return $this;
