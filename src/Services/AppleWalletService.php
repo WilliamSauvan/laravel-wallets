@@ -85,6 +85,9 @@ class AppleWalletService
 
         try {
             foreach (self::IMAGE_LIST as $image) {
+                if (! file_exists(public_path(self::APPLE_IMAGES_FOLDER.$image))) {
+                    continue;
+                }
                 $this->pkPass->addFile(public_path(self::APPLE_IMAGES_FOLDER.$image));
             }
         } catch (\PKPass\PKPassException $e) {
